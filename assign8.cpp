@@ -8,9 +8,13 @@
 using namespace std;
  
 int main() {
+    // At this point in time I just need to make
+    // argument a vector so I stop getting garbage
+    // I'm going to commit then try again.
 
     char buffer[80];
-while (true)
+
+    while (true)
     {
         string command, option;
         char* argument[5]; 
@@ -59,26 +63,26 @@ while (true)
         pid = fork();
         if (pid == -1)
         { 
-           perror("fork");
-           exit(EXIT_FAILURE);
+            perror("fork");
+            exit(EXIT_FAILURE);
         }
 
         if (pid == 0)
         {
-          // rs = execlp(command.c_str(), argument, (char*) NULL);
-          rs = execvp(command.c_str(), argument);
+            // rs = execlp(command.c_str(), argument, (char*) NULL);
+            rs = execvp(command.c_str(), argument);
 
-          if (rs == -1)
-          {
+            if (rs == -1)
+            {
               perror("execlp"); exit(EXIT_FAILURE); 
-          }
+            }
         }
         else
         { 
-          // Parent process: wait for child to end
-          wait(&status);
+            // Parent process: wait for child to end
+            wait(&status);
         }
 
     }
-        return 0;
+    return 0;
 }
