@@ -8,16 +8,13 @@
 using namespace std;
  
 int main() {
-    // At this point in time I just need to make
-    // argument a vector so I stop getting garbage
-    // I'm going to commit then try again.
 
     char buffer[80];
 
     while (true)
     {
         string command, option;
-        char* argument[5]; 
+        char *argument[] = {(char*)0, (char*)0, (char*)0, (char*)0, (char*)0}; 
 
         // prompt user for command to run
         cout << "Enter a command to run: ";
@@ -57,24 +54,24 @@ int main() {
         //
         //
         //
-        int pid, rs, status;
+        int rs, status;
 
         // fork will make 2 processes
-        pid = fork();
-        if (pid == -1)
+        rs = fork();
+        if (rs == -1)
         { 
             perror("fork");
             exit(EXIT_FAILURE);
         }
 
-        if (pid == 0)
+        if (rs == 0)
         {
-            // rs = execlp(command.c_str(), argument, (char*) NULL);
             rs = execvp(command.c_str(), argument);
 
             if (rs == -1)
             {
-              perror("execlp"); exit(EXIT_FAILURE); 
+              perror(*argument);
+              exit(EXIT_FAILURE); 
             }
         }
         else
