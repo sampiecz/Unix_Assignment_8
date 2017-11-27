@@ -10,12 +10,10 @@ using namespace std;
 int main() {
 
     char buffer[80];
-
-    while (true)
+while (true)
     {
-        string command;
-        char argument[4];
-        char options[4];
+        string command, option;
+        char* argument[5]; 
 
         // prompt user for command to run
         cout << "Enter a command to run: ";
@@ -27,13 +25,25 @@ int main() {
             break;
         }
 
-        cout << buffer << endl;
-
         char * pch;
         pch = strtok (buffer, " ");
+
+        int count = 0;
+
         while (pch != NULL)
         {
+            if (count == 0)
+            {
+                command = pch;
+            }
+            /* else if ()
+            {
+                option = pch;
+            } 
+            */
+            argument[count] = pch;
             pch = strtok (NULL, " ");
+            count++;
         }
 
         //
@@ -43,7 +53,6 @@ int main() {
         //
         //
         //
-        /*
         int pid, rs, status;
 
         // fork will make 2 processes
@@ -56,8 +65,9 @@ int main() {
 
         if (pid == 0)
         {
-          rs = execlp("touch", "touch", buffer, (char*) NULL);
-          
+          // rs = execlp(command.c_str(), argument, (char*) NULL);
+          rs = execvp(command.c_str(), argument);
+
           if (rs == -1)
           {
               perror("execlp"); exit(EXIT_FAILURE); 
@@ -69,7 +79,6 @@ int main() {
           wait(&status);
         }
 
-        */
     }
         return 0;
 }
